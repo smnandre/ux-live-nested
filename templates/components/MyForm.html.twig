@@ -1,0 +1,30 @@
+{% props key %}
+<div {{ attributes }} class="d-flex justify-content-between flex-column  w-90">
+    {% if isSuccessful %}
+        <div>Saved!</div>
+    {% else %}
+        {{ form_errors(form) }}
+        {{ form_start(form, {
+            attr: {
+                'novalidate': true,
+                'data-action': 'live#action:prevent',
+                'data-live-action-param': 'saveComment',
+                'class': 'array-survey-data nomediapadding br-10 pr-15 pl-15 overlay-wrapper',
+            }
+        }) }}
+        {{ form_widget(form.text,{
+            'attr': {
+                'class': 'text-white m-0 addCommentUser w-100',
+            }
+        }) }}
+        {{ form_errors(form.text) }}
+        {{ form_widget(form.submit,{
+            'attr': {
+                'class': 'sender float-right' ~ (this.hasValidationErrors ? ' disabled' : ''),
+            }
+        }) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <div class="overlay backdrop" data-ajax-form-target="backdrop" style="display: none"><i class="fa fa-3x fa-spinner fa-spin"></i></div>
+    {% endif %}
+</div>
