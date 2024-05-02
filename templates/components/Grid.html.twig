@@ -1,41 +1,41 @@
 <div class="ProductGrid" {{ attributes.defaults(stimulus_controller('scroll')) }}>
-
-    <div class="p-4">
-        <div id="results" style="display: flex; gap: 1rem; flex-direction: column;">
+    <div class="p-4" style="padding: 1rem;">
+        <div id="results" style="display: flex; gap: 2rem; flex-direction: column; align-items: center;">
 
             {% if page > 1 %}
                 {#  🦊 #}
                 {# Adding a fake "previous page" div is enough to trick the system #}
                 {# It must have the same ID than the original page #}
-                <div class="ProductGrid_page" id="page--{{ page - 1 }}" data-live-ignore="true"></div>
+
+                {# 🐼🐼 Apply the same trick recursively, as we need 🐼🐼 #}
+                {# the LAST id to exist for EVERY page now #}
+                {% for _page in 1..(page - 1) %}
+                    <div class="ProductGrid_page" id="page--{{ _page }}" data-live-ignore="true">
+                        <article class="ProductGrid_item" id="item--{{ _page }}--{{ per_page - 1 }}"></article>
+                    </div>
+                {% endfor %}
             {% endif %}
 
             {# Current page #}
-            <div class="ProductGrid_page" id="page--{{ page }}" data-live-ignore="true">
-                {% for key,item in this.items %}
-                    <article class="ProductGrid_item" data-num="{{ item.id }}"
-                             style="--color: {{ item.color }};">
-                        <div class="ProductGrid_media">
-                            <span>{{ item.emoji }}</span>
-                        </div>
-                        <data value="{{ item.id }}">$ {{ item.id + 1 }}<small>.99</small></data>
-                        <twig:MyForm  key="{{ page*this.perPage+key }}"/>
+            <div class="ProductGrid_page hstack" id="page--{{ page }}" data-live-ignore="true">
+                {% for key, item in this.items %}
+                    <article class="ProductGrid_item" id="item--{{ page }}--{{ key }}">
+                        <twig:MyForm key="item--{{ page }}--{{ key }}" />
                     </article>
                 {% endfor %}
             </div>
 
             {% if this.hasMore %}
-                <div style="display: grid; place-content: center;padding: 4rem;">
+                <div style="align-self: center">
                     <button
-                            data-action="live#action"
-                            data-live-action-param="more"
-                            data-scroll-target="loader"
-                            class="btn btn-primary">Load More (page {{ page + 1 }})
+                        data-action="live#action"
+                        data-live-action-param="more"
+                        data-scroll-target="loader"
+                    >
+                        Load More (page {{ page + 1 }})
                     </button>
                 </div>
             {% endif %}
-
         </div>
     </div>
-
 </div>

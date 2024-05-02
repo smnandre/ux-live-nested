@@ -1,5 +1,49 @@
 {% extends'base.html.twig' %}
 
+{% block stylesheets %}
+        <style>
+          body {
+            background: #fff;
+            .center {
+              display: grid;
+              place-content: center;
+              max-width: min(80vw, 50rem);
+              margin-inline: auto;
+            }
+            .vstack, .hstack {
+              display: flex;
+              gap: 1.5rem;
+            }
+            [data-controller~="live"] {
+              border: 1px dashed rgb(0 0 0 / .1);
+              padding: 1.5rem;
+              position: relative;
+              &:before, &:after {
+                padding: 0.2rem 0.5rem;
+                font-family: Monaco, sans-serif;
+                font-size: x-small;
+                position: absolute;
+                top: 0;
+                transform: translateY(-50%) ;
+                --hue: 40deg;
+                color: hsl(var(--hue) 80% 60%);
+                background: hsl(var(--hue) 80% 90% / .5);
+              }
+              &:before {
+                left: 0;
+                --hue: 180deg;
+                content: attr(data-controller);
+              }
+              &:after {
+                right: 0;
+                content: attr(id);
+              }
+            }
+        </style>
+    {% endblock %}
+
 {% block body %}
-    <twig:Grid />
+    <div class="center">
+        <twig:Grid />
+    </div>
 {% endblock %}

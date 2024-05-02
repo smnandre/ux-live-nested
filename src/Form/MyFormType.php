@@ -17,22 +17,19 @@ class MyFormType extends AbstractType
 			->add("text", null, [
 				"label"       => "Váš názor",
 				"attr"        => [
-					"placeholder" => "Pridajte Váš názor...",
 				],
 				"constraints" => [
 					new NotBlank([
-						"message" => "Názor nemôže byť prázdny",
 					]),
 					new Length([
 						"min"        => 5,
-						"minMessage" => "Názor musí mať minimálne {{ limit }} znakov",
+						//"minMessage" => "Názor musí mať minimálne {{ limit }} znakov",
 						"max"        => 1000,
-						"maxMessage" => "Názor môže mať maximálne {{ limit }} znakov",
+						//"maxMessage" => "Názor môže mať maximálne {{ limit }} znakov",
 					]),
 				],
 			])
 			->add("submit", SubmitType::class, [
-				"label" => "Odoslať",
 			]);
     }
 
